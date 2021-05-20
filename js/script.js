@@ -91,7 +91,11 @@ var app = new Vue({
 
     },
     methods: {
-        getContactImg: function() {
+        getContactImg: function(contact) {
+            return `img/avatar${contact.avatar}.jpg`;
+        },
+        getLastMsg: function(contact) {
+            return contact.messages[contact.messages.length - 1];
         }
     }
 

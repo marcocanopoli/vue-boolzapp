@@ -17,7 +17,8 @@
             <main id="root">
                 <div class="main-left">
                     <div class="user-bar">
-                        <img id="user-pic" src="img/avatar_3.jpg" alt="user profile pic">
+                        <img id="user-pic" src="https://lh3.googleusercontent.com/ogw/ADGmqu88JKFdsgov-fjSoJjCUiUzhOMU7_GRTAC7-ZUA3w=s83-c-mo" alt="user profile pic">
+                        <span class="username">Marco Canopoli</span>
                         <div>
                             <a href="#">
                                 <i class="fas fa-spinner"></i>
@@ -35,7 +36,7 @@
                             <i class="fas fa-bell-slash"></i>
                         </a>
                         <div>
-                            <span class="f-16">Ricevi notifiche di nuovi messaggi</span>
+                            <span>Ricevi notifiche di nuovi messaggi</span>
                             <a class="c-grey" href="#">Attiva notifiche desktop ></a>
                         </div>
                     </div>
@@ -46,14 +47,15 @@
                         </div>
                     </div>
                     <div class="chats-box">
-                        <div class="chat">
-                            <img class="chat-pic" src="img/avatar_1.jpg" alt="contact profile pic">
+
+                        <div v-for="contact in contacts" class="chat">
+                            <img class="chat-pic" :src="getContactImg(contact)" alt="contact profile pic">
                             <div class="contact">
                                 <div class="name-date">
-                                    <span class="chat-name">Oscar</span>
-                                    <span class="chat-last-date c-grey">16:30</span>
+                                    <span class="chat-name">{{ contact.name }}</span>
+                                    <span class="chat-last-date c-grey">{{ getLastMsg(contact).date }}</span>
                                 </div>
-                                <span class="chat-preview c-grey">A presto!</span>
+                                <span class="chat-last-msg c-grey">{{ getLastMsg(contact).text }}</span>
                             </div>
                         </div>
                         
@@ -61,9 +63,9 @@
                 </div>
                 <div class="main-right">
                     <div class="current-titlebar">
-                        <img id="current-pic" src="img/avatar_5.jpg" alt="current chat pic">
+                        <img id="current-pic" src="img/avatar_1.jpg" alt="current chat pic">
                         <div class="current-info">
-                            <span class="chat-name">Oscar</span>
+                            <span class="chat-name">Michele</span>
                             <span class="c-grey">Ultimo accesso oggi alle 16:23</span>
                         </div>
                         <div class="current-links">
