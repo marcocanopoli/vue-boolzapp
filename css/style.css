@@ -169,6 +169,13 @@ i {
     border-bottom: 1px solid #ededed;
     width: calc(100% - 100px);
 }
+.chat:hover {
+    background-color: #f6f6f6;
+}
+
+.active-chat {
+    background-color: #ededed;
+}
 
 .chat-pic {
     height: 50px;

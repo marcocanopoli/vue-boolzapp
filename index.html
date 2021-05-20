@@ -12,13 +12,25 @@
         <title>Boolzapp</title>
     </head>
     <body>
+        <!-- body wrapper -->
         <div class="body-wrapper">
+
+            <!-- bg bar -->
             <div class="top-bar"></div>
+            <!-- /bg bar -->
+
+            <!-- main window / Vue root -->
             <main id="root">
+
+                <!-- main left column -->
                 <div class="main-left">
+
+                    <!-- user info bar -->
                     <div class="user-bar">
                         <img id="user-pic" src="https://lh3.googleusercontent.com/ogw/ADGmqu88JKFdsgov-fjSoJjCUiUzhOMU7_GRTAC7-ZUA3w=s83-c-mo" alt="user profile pic">
                         <span class="username">Marco Canopoli</span>
+
+                        <!-- buttons -->
                         <div>
                             <a href="#">
                                 <i class="fas fa-spinner"></i>
@@ -29,8 +41,13 @@
                             <a href="#">
                                 <i class="fas fa-ellipsis-v"></i>
                             </a>
-                        </div>                        
+                        </div>  
+                        <!-- /buttons -->
+
                     </div>
+                    <!-- /user info bar -->
+
+                    <!-- notifications control -->
                     <div class="notifications">
                         <a id="bell-box" href="#">
                             <i class="fas fa-bell-slash"></i>
@@ -40,15 +57,22 @@
                             <a class="c-grey" href="#">Attiva notifiche desktop ></a>
                         </div>
                     </div>
+                    <!-- /notifications control -->
+
+                    <!-- chats search bar -->
                     <div class="search-box">
                         <div class="searchbar">
                             <i class="fas fa-search"></i>
                             <input type="text" placeholder="Cerca o inizia una nuova chat">                         
                         </div>
                     </div>
+                    <!-- chats search bar -->
+
+                    <!-- contacts & groups chats -->
                     <div class="chats-box">
 
-                        <div v-for="contact in contacts" class="chat">
+                        <!-- single contact chat -->
+                        <div v-for="contact in contacts" class="chat active-chat">
                             <img class="chat-pic" :src="getContactImg(contact)" alt="contact profile pic">
                             <div class="contact">
                                 <div class="name-date">
@@ -58,16 +82,26 @@
                                 <span class="chat-last-msg c-grey">{{ getLastMsg(contact).text }}</span>
                             </div>
                         </div>
+                        <!-- /single contact chat -->
                         
                     </div>
+                    <!-- /contacts & groups chats -->
+
                 </div>
+                <!-- /main left column -->
+                
+                <!-- main right column -->
                 <div class="main-right">
+
+                    <!-- current chat info -->
                     <div class="current-titlebar">
                         <img id="current-pic" src="img/avatar_1.jpg" alt="current chat pic">
                         <div class="current-info">
                             <span class="chat-name">Michele</span>
                             <span class="c-grey">Ultimo accesso oggi alle 16:23</span>
                         </div>
+
+                        <!-- actions -->
                         <div class="current-links">
                             <a href="#">
                                 <i class="fas fa-search"></i>
@@ -76,42 +110,71 @@
                                 <i class="fas fa-ellipsis-v"></i>
                             </a>
                         </div>
+                        <!-- /actions -->
+
                     </div>
+                    <!-- /current chat info -->
+                    
+                    <!-- current chat -->                    
                     <div class="chat-body">
+
                         <div class="user-msg">
                             <p class="msg-text">
                                 prova
                                 <span class="msg-time">10:30</span>
                             </p>
                         </div>
+
                         <div class="user-msg">
                             <p class="msg-text">
                                 prova
                                 <span class="msg-time">10:30</span>
                             </p>
                         </div>
+
                         <div class="chat-msg">
                             <p class="msg-text">
                                 prova
                                 <span class="msg-time">10:45</span>
                             </p>
                         </div>
+
                     </div>
+                    <!-- /current chat -->
+
                     <div class="new-message-bar">
+
+                        <!-- emojis -->
                         <a href="#">
                             <i class="far fa-laugh"></i>
                         </a>
+                        <!-- /emojis -->
+
+                        <!-- attach to msg-->
                         <a href="#">
                             <i class="fas fa-paperclip"></i>
                         </a>
+                        <!-- /attach to msg-->
+
+                        <!-- text msg input -->
                         <input class="new-message" type="text" placeholder="Scrivi un messaggio">
+                        <!-- /text msg input -->
+
+                        <!-- record  vocal message -->
                         <a href="#">
                             <i class="fas fa-microphone"></i>
                         </a>
+                        <!-- /record  vocal message -->
+
                     </div>
                 </div>
+                <!-- /main right column -->
+
             </main>
+            <!-- main window / Vue root -->
+
         </div>
+        <!-- /body wrapper -->
 
         <script src="js/script.js"></script>
     </body>

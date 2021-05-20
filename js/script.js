@@ -86,9 +86,8 @@ var app = new Vue({
                     }
                 ],
             },
-        ]
-
-
+        ],
+        activeChatIndex: 0
     },
     methods: {
         getContactImg: function(contact) {
