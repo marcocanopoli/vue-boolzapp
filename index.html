@@ -12,8 +12,105 @@
         <title>Boolzapp</title>
     </head>
     <body>
+        <div class="body-wrapper">
+            <div class="top-bar"></div>
+            <main id="root">
+                <div class="main-left">
+                    <div class="user-bar">
+                        <img id="user-pic" src="img/avatar_3.jpg" alt="user profile pic">
+                        <div>
+                            <a href="#">
+                                <i class="fas fa-spinner"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fas fa-comment-alt"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </a>
+                        </div>                        
+                    </div>
+                    <div class="notifications">
+                        <a id="bell-box" href="#">
+                            <i class="fas fa-bell-slash"></i>
+                        </a>
+                        <div>
+                            <span class="f-16">Ricevi notifiche di nuovi messaggi</span>
+                            <a class="c-grey" href="#">Attiva notifiche desktop ></a>
+                        </div>
+                    </div>
+                    <div class="search-box">
+                        <div class="searchbar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Cerca o inizia una nuova chat">                         
+                        </div>
+                    </div>
+                    <div class="chats-box">
+                        <div class="chat">
+                            <img class="chat-pic" src="img/avatar_1.jpg" alt="contact profile pic">
+                            <div class="contact">
+                                <div class="name-date">
+                                    <span class="chat-name">Oscar</span>
+                                    <span class="chat-last-date c-grey">16:30</span>
+                                </div>
+                                <span class="chat-preview c-grey">A presto!</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="main-right">
+                    <div class="current-titlebar">
+                        <img id="current-pic" src="img/avatar_5.jpg" alt="current chat pic">
+                        <div class="current-info">
+                            <span class="chat-name">Oscar</span>
+                            <span class="c-grey">Ultimo accesso oggi alle 16:23</span>
+                        </div>
+                        <div class="current-links">
+                            <a href="#">
+                                <i class="fas fa-search"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="chat-body">
+                        <div class="user-msg">
+                            <p class="msg-text">
+                                prova
+                                <span class="msg-time">10:30</span>
+                            </p>
+                        </div>
+                        <div class="user-msg">
+                            <p class="msg-text">
+                                prova
+                                <span class="msg-time">10:30</span>
+                            </p>
+                        </div>
+                        <div class="chat-msg">
+                            <p class="msg-text">
+                                prova
+                                <span class="msg-time">10:45</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="new-message-bar">
+                        <a href="#">
+                            <i class="far fa-laugh"></i>
+                        </a>
+                        <a href="#">
+                            <i class="fas fa-paperclip"></i>
+                        </a>
+                        <input class="new-message" type="text" placeholder="Scrivi un messaggio">
+                        <a href="#">
+                            <i class="fas fa-microphone"></i>
+                        </a>
+                    </div>
+                </div>
+            </main>
+        </div>
 
-        
         <script src="js/script.js"></script>
     </body>
 </html>
