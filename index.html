@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -15,10 +16,6 @@
         <!-- body wrapper -->
         <div class="body-wrapper">
 
-            <!-- bg bar -->
-            <div class="top-bar"></div>
-            <!-- /bg bar -->
-
             <!-- main window / Vue root -->
             <main id="root">
 
@@ -26,7 +23,7 @@
                 <div class="main-left">
 
                     <!-- user info bar -->
-                    <div class="user-bar">
+                    <div class="user">
                         <img id="user-pic" src="https://lh3.googleusercontent.com/ogw/ADGmqu88JKFdsgov-fjSoJjCUiUzhOMU7_GRTAC7-ZUA3w=s83-c-mo" alt="user profile pic">
                         <span class="username">Marco Canopoli</span>
 
@@ -60,7 +57,7 @@
                     <!-- /notifications control -->
 
                     <!-- chats search bar -->
-                    <div class="search-box">
+                    <div class="search">
                         <div class="searchbar">
                             <i class="fas fa-search"></i>
                             <input type="text" placeholder="Cerca o inizia una nuova chat">                         
@@ -69,18 +66,19 @@
                     <!-- chats search bar -->
 
                     <!-- contacts & groups chats -->
-                    <div class="chats-box">
+                    <div class="contacts">
 
                         <!-- single contact chat -->
-                        <div v-for="contact in contacts" class="chat active-chat">
-                            <img class="chat-pic" :src="getContactImg(contact)" alt="contact profile pic">
-                            <div class="contact">
-                                <div class="name-date">
-                                    <span class="chat-name">{{ contact.name }}</span>
-                                    <span class="chat-last-date c-grey">{{ getLastMsg(contact).date }}</span>
-                                </div>
-                                <span class="chat-last-msg c-grey">{{ getLastMsg(contact).text }}</span>
+                        <div    v-for="(contact, index) in contacts" 
+                                @click="setActive(index)"
+                                class="contact-box"
+                                :class="{'active-contact': index == activeChatIndex}">
+                            <img class="contact-pic" :src="getContactImg(contact)" :alt="contact.name">
+                            <div class="contact-info">
+                                <span class="contact-name">{{ contact.name }}</span>
+                                <span class="c-grey">{{ text40(getLastMsgText(contact)) }}</span>
                             </div>
+                            <span class="last-msg-date c-grey">{{ getLastMsgDate(contact) }}</span>
                         </div>
                         <!-- /single contact chat -->
                         
@@ -94,15 +92,15 @@
                 <div class="main-right">
 
                     <!-- current chat info -->
-                    <div class="current-titlebar">
-                        <img id="current-pic" src="img/avatar_1.jpg" alt="current chat pic">
+                    <div class="current-header">
+                        <img id="current-pic" :src="getActiveImg()" alt="current chat pic">
                         <div class="current-info">
-                            <span class="chat-name">Michele</span>
-                            <span class="c-grey">Ultimo accesso oggi alle 16:23</span>
+                            <span class="current-name">{{ getActiveContact().name }}</span>
+                            <span class="c-grey">Ultimo accesso: {{ getLastMsgDate(getActiveContact()) }}</span>
                         </div>
 
                         <!-- actions -->
-                        <div class="current-links">
+                        <div class="current-actions">
                             <a href="#">
                                 <i class="fas fa-search"></i>
                             </a>
@@ -116,28 +114,14 @@
                     <!-- /current chat info -->
                     
                     <!-- current chat -->                    
-                    <div class="chat-body">
+                    <div class="current-chat">
 
-                        <div class="user-msg">
-                            <p class="msg-text">
-                                prova
-                                <span class="msg-time">10:30</span>
-                            </p>
-                        </div>
-
-                        <div class="user-msg">
-                            <p class="msg-text">
-                                prova
-                                <span class="msg-time">10:30</span>
-                            </p>
-                        </div>
-
-                        <div class="chat-msg">
-                            <p class="msg-text">
-                                prova
-                                <span class="msg-time">10:45</span>
-                            </p>
-                        </div>
+                        <p  v-for="message in getActiveContact().messages"
+                            class="msg-text"
+                            :class="message.status == 'sent' ? 'user-msg' : 'chat-msg'">
+                            {{ message.text }}
+                            <span class="msg-time">{{ getMsgTime(message) }}</span>
+                        </p>
 
                     </div>
                     <!-- /current chat -->
