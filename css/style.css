@@ -246,10 +246,14 @@ i {
 .current-chat {
     display: flex;
     flex-direction: column;
-    padding: 50px 90px;
+    padding: 50px 90px 0;
     flex-grow: 1;
     overflow-y: auto;
     background-image: url("../img/mine.jpg");
+}
+.current-chat::after {
+    content: '';
+    padding-bottom: 10px;
 }
 
 .msg-text {
@@ -265,30 +269,29 @@ i {
 .user-msg {
     align-self: flex-end;  
     border-radius: 10px 0 10px 10px;
-    background-color: #fff;
+    background-color: #dcf8c6;
 }
 .chat-msg {
     align-self: flex-start;
-    border-radius: 0 10px 10px;
-    background-color: #dcf8c6;
-    
+    border-radius: 0 10px 10px;    
+    background-color: #fff;
 }
 .user-msg::before,
 .chat-msg::before {
     content: "";
     position: absolute;
     top: 0px;
-    filter: drop-shadow(0px 2px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0px 1px rgba(0, 0, 0, 0.2));
 }
 .user-msg::before {
-    border-left: 15px solid #fff;
+    border-left: 15px solid #dcf8c6;
     border-right: 1px solid transparent;
     border-bottom: 15px solid transparent;
     right: -16px;
 }
 .chat-msg::before {
     border-left: 1px solid transparent;
-    border-right: 15px solid #dcf8c6;
+    border-right: 15px solid #fff;
     border-bottom: 15px solid transparent;
     left: -16px;
 }

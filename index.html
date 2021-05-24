@@ -141,7 +141,10 @@
                         <!-- /attach to msg-->
 
                         <!-- text msg input -->
-                        <input class="new-message" type="text" placeholder="Scrivi un messaggio">
+                        <input  class="new-message" type="text" 
+                                placeholder="Scrivi un messaggio"
+                                v-model="newMsg"
+                                @keydown.enter="sendMsg">
                         <!-- /text msg input -->
 
                         <!-- record  vocal message -->

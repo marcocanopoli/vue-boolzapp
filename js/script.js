@@ -97,7 +97,8 @@ var app = new Vue({
                 ],
             },
         ],
-        activeChatIndex: 0
+        activeChatIndex: 0,
+        newMsg: ''
     },
     methods: {
         getNowDateTime: function () {
@@ -123,7 +124,6 @@ var app = new Vue({
             const msgDay = msgDateTime.substr(0, 2);
             const msgMonthYear = msgDateTime.substr(2, 8);
             const msgHoursMins = msgDateTime.substr(10, 6);
-            console.log(todayDay, msgDay);
             let lastMsgTime;
 
             if (msgDate == todayDate) {
@@ -146,7 +146,6 @@ var app = new Vue({
             return newText;
         },
         setActive: function(chatIndex) {
-            console.log(this.activeChatIndex);
             this.activeChatIndex = chatIndex;
         },
         getActiveContact: function() {
@@ -155,5 +154,28 @@ var app = new Vue({
         getActiveImg: function() {
             return `img/avatar${this.contacts[this.activeChatIndex].avatar}.jpg`;
         },
+        sendMsg: function() {
+            const msg = {
+                date: this.getNowDateTime(),
+                text: this.newMsg,
+                status: 'sent'
+            }
+            this.getActiveContact().messages.push(msg);
+            this.newMsg = '';
+
+            setTimeout(() => {
+                const botMsg = {
+                    date: this.getNowDateTime(),
+                    text: 'ok',
+                    status: 'received'
+                }
+                this.getActiveContact().messages.push(botMsg); 
+            }, 1000);
+        }
+    },
+    updated: function () {
+        //scroll to last message
+        const msgList = document.querySelectorAll('.msg-text');        
+        msgList[msgList.length -1].scrollIntoView();
     }
 });
