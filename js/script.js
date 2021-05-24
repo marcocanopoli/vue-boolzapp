@@ -4,7 +4,7 @@ var app = new Vue({
     data: {
         contacts: [
             {
-                name: 'Michele',
+                name: 'Mìchèlé',
                 avatar: '_1',
                 visible: true,
                 messages: [
@@ -24,14 +24,14 @@ var app = new Vue({
                         status: 'received'
                     },
                     {
-                        date: '20/05/2021 16:15:22',
-                        text: 'Test ieri :Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis, illo?',
+                        date: '25/05/2021 16:15:22',
+                        text: 'Test IERI',
                         status: 'received'
                     }
                 ],
             },
             {
-                name: 'Fabio',
+                name: 'Fàbìo',
                 avatar: '_2',
                 visible: true,
                 messages: [
@@ -51,14 +51,14 @@ var app = new Vue({
                         status: 'sent'
                     },
                     {
-                        date: '21/05/2021 16:35:00',
-                        text: 'Test oggi :Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis, illo?',
+                        date: '26/05/2021 16:35:00',
+                        text: 'Test OGGI',
                         status: 'sent'
                     }
                 ],
             },     
             {
-                name: 'Samuele',
+                name: 'Sàmùèlé',
                 avatar: '_3',
                 visible: true,
                 messages: [
@@ -80,7 +80,7 @@ var app = new Vue({
                 ],
             },
             {
-                name: 'Luisa',
+                name: 'Lùìsà',
                 avatar: '_4',
                 visible: true,
                 messages: [
@@ -98,22 +98,38 @@ var app = new Vue({
             },
         ],
         activeChatIndex: 0,
+        search: '',
         newMsg: ''
     },
     methods: {
+        //get date and time
         getNowDateTime: function () {
             return dayjs().format('DD/MM/YYYY HH:mm:ss');
         },
+
+        //get message time in HH:mm format
         getMsgTime: function(message) {
             const msgTime = message.date.split(" ")[1];
             return msgTime.substr(0, 5);
         },
+
+        //get avatar path for specified contact obj
         getContactImg: function(contact) {
             return `img/avatar${contact.avatar}.jpg`;
         },
+
+        //get last message for specified contact obj
         getLastMsg: function(contact) {
             return contact.messages[contact.messages.length - 1];
         },
+
+        //get last message text for specified contact obj
+        getLastMsgText: function(contact) {
+            return this.getLastMsg(contact).text;
+        },
+
+        //get last message date for specified contact obj
+        //special checks for 'yesterday' and 'today' days
         getLastMsgDate: function(contact) {
             const todayDateTime = this.getNowDateTime();
             const todayDate = todayDateTime.split(" ")[0];
@@ -134,26 +150,24 @@ var app = new Vue({
                 lastMsgTime = `${msgDate} ${msgHoursMins}`
             }
             return lastMsgTime;
-        },        
-        getLastMsgText: function(contact) {
-            return this.getLastMsg(contact).text;
         },
-        text40: function(text) {
-            let newText = text;
-            if (text.length > 35) {
-                newText = `${text.substring(0, 40)}...`;
-            }
-            return newText;
-        },
-        setActive: function(chatIndex) {
-            this.activeChatIndex = chatIndex;
-        },
+        
+        //gets current active contact
         getActiveContact: function() {
             return this.contacts[this.activeChatIndex];
         },
+        
+        //gets current active contact avatar path
         getActiveImg: function() {
             return `img/avatar${this.contacts[this.activeChatIndex].avatar}.jpg`;
         },
+        
+        //set current active contact index
+        setActive: function(chatIndex) {
+            this.activeChatIndex = chatIndex;
+        },
+
+        //sends message in current chat
         sendMsg: function() {
             const msg = {
                 date: this.getNowDateTime(),
@@ -171,11 +185,43 @@ var app = new Vue({
                 }
                 this.getActiveContact().messages.push(botMsg); 
             }, 1000);
+        },
+
+        //gets first 40 chars of string (with ellipses)
+        text40: function(text) {
+            let newText = text;
+            if (text.length > 35) {
+                newText = `${text.substring(0, 40)}...`;
+            }
+            return newText;
+        },
+
+        //normalize string (no accents)
+        strNormalize: function (string) {
+            return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        },
+
+        // search function for contact names
+        //sets visible to false if contact doesn't match search string
+        contactsFilter: function() {            
+            this.contacts.forEach(contact => {
+                const mySearch = this.strNormalize(this.search).toUpperCase();
+                const contactName = this.strNormalize(contact.name).toUpperCase();
+                if (contactName.startsWith(mySearch)) {
+                    contact.visible = true;
+                } else {
+                    contact.visible = false;
+                }
+            });
+        },
+
+        //scroll to last message
+        lastMsgScroll: function() {
+            const msgList = document.querySelectorAll('.msg-text');        
+            msgList[msgList.length -1].scrollIntoView();
         }
     },
-    updated: function () {
-        //scroll to last message
-        const msgList = document.querySelectorAll('.msg-text');        
-        msgList[msgList.length -1].scrollIntoView();
+    updated () {
+        this.lastMsgScroll();
     }
 });
