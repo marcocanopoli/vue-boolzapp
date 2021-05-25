@@ -296,7 +296,7 @@ i {
     left: -16px;
 }
 
-.msg-text .fa-chevron-down {
+.msg-text i {
     position: absolute;
     right: 10px;
     top: 8px;
@@ -305,7 +305,7 @@ i {
     transition: .3s;
     cursor: pointer;
 }
-.msg-text:hover .fa-chevron-down {
+.msg-text:hover i {
     opacity: 1;
 }
 
@@ -313,13 +313,14 @@ i {
     position: absolute;
     right: 25px;
     bottom: 4px;
-    font-size: 10px;
+    font-size: 11px;
 }
 
 .dropdown {
     position: absolute;
     bottom: auto;
     width: calc(100% - 20px);
+    min-width: 110px;
     margin-top: 3px;
     padding: 10px;
     background-color: #fff;
@@ -330,10 +331,14 @@ i {
     display: flex;
     flex-direction: column;
 }
-.dropdown-content span {
+.dropdown-content span {    
     padding: 10px;
     color: rgba(0, 0, 0, 0.5);
     cursor: pointer;
+    transition: .2s;
+}
+.dropdown-content span:hover {
+    color: rgb(0, 0, 0);
 }
 
 /* new message */

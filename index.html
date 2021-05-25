@@ -125,8 +125,9 @@
                             class="msg-text"
                             :class="message.status">
                             <p>{{ message.text }}</p>
-                            <i class="fas fa-chevron-down" 
-                            @click="dropdownToggle(index)"></i>
+                            <i  class="fas"
+                                :class="dropdownOpen ? 'fa-chevron-up' : 'fa-chevron-down'"
+                                @click="dropdownToggle(index)"></i>
                             <span class="msg-time c-grey">{{ getMsgTime(message) }}</span>
                             <div class="dropdown" 
                                  v-show="dropdownOpen == true && msgIndex == index">

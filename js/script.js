@@ -31,6 +31,23 @@ var app = new Vue({
                 ],
             },
             {
+                name: 'Mìrèllà',
+                avatar: '_io',
+                visible: true,
+                messages: [
+                    {
+                        date: '10/01/2020 15:30:55',
+                        text: 'Lo sai che ha aperto una nuova pizzeria?',
+                        status: 'sent'
+                    },
+                    {
+                        date: '10/01/2020 15:50:00',
+                        text: 'Si, ma preferirei andare al cinema',
+                        status: 'received'
+                    }
+                ],
+            },
+            {
                 name: 'Fàbìo',
                 avatar: '_2',
                 visible: true,
@@ -82,23 +99,6 @@ var app = new Vue({
             {
                 name: 'Lùìsà',
                 avatar: '_4',
-                visible: true,
-                messages: [
-                    {
-                        date: '10/01/2020 15:30:55',
-                        text: 'Lo sai che ha aperto una nuova pizzeria?',
-                        status: 'sent'
-                    },
-                    {
-                        date: '10/01/2020 15:50:00',
-                        text: 'Si, ma preferirei andare al cinema',
-                        status: 'received'
-                    }
-                ],
-            },
-            {
-                name: 'Lùìgì',
-                avatar: '_5',
                 visible: true,
                 messages: [
                     {
@@ -270,9 +270,10 @@ var app = new Vue({
         },
 
         //delete selected message
-        deleteMsg: function(msgIndex) {
-            if (this.getActiveContact().messages.length != 0) {
-                this.getActiveContact().messages.splice(msgIndex, 1);
+        deleteMsg: function(msgIndex) {            
+            this.getActiveContact().messages.splice(msgIndex, 1);
+            if (this.getActiveContact().messages.length == 0) { 
+                this.contacts.splice(this.activeChatIndex, 1);
             }
             this.dropdownOpen = false;
         }
