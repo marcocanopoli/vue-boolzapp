@@ -24,7 +24,7 @@ var app = new Vue({
                         status: 'received'
                     },
                     {
-                        date: '25/05/2021 16:15:22',
+                        date: '24/05/2021 16:15:22',
                         text: 'Test IERI',
                         status: 'received'
                     }
@@ -68,7 +68,7 @@ var app = new Vue({
                         status: 'sent'
                     },
                     {
-                        date: '26/05/2021 16:35:00',
+                        date: '25/05/2021 16:35:00',
                         text: 'Test OGGI',
                         status: 'sent'
                     }
