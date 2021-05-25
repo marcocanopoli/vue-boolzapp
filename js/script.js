@@ -269,17 +269,12 @@ var app = new Vue({
             this.dropdownOpen = !this.dropdownOpen;
         },
 
-        closeToggle: function() {
-            this.dropdownOpen = false;
-            console.log("close");
-        },
-
         //delete selected message
         deleteMsg: function(msgIndex) {
             if (this.getActiveContact().messages.length != 0) {
                 this.getActiveContact().messages.splice(msgIndex, 1);
             }
-            this.closeToggle();
+            this.dropdownOpen = false;
         }
     },
     updated () {
