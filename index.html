@@ -73,10 +73,11 @@
 
                         <!-- single contact chat -->
                         <div    v-for="(contact, index) in contacts"
-                                @click="setActive(index)"
+                                v-show="contact.visible == true"
                                 class="contact-box"
                                 :class="{'active-contact' : index == activeChatIndex}"
-                                v-show="contact.visible == true">
+                                @click="setActive(index)"
+                        >
                             <img class="contact-pic" :src="getContactImg(contact)" :alt="contact.name">
                             <div class="contact-info">
                                 <span class="contact-name">{{ contact.name }}</span>
@@ -120,12 +121,21 @@
                     <!-- current chat -->                    
                     <div class="current-chat">
 
-                        <p  v-for="message in getActiveContact().messages"
+                        <div  v-for="message, index in getActiveContact().messages"
                             class="msg-text"
-                            :class="message.status == 'sent' ? 'user-msg' : 'chat-msg'">
-                            {{ message.text }}
-                            <span class="msg-time">{{ getMsgTime(message) }}</span>
-                        </p>
+                            :class="message.status">
+                            <p>{{ message.text }}</p>
+                            <i class="fas fa-chevron-down" 
+                            @click="dropdownToggle(index)"></i>
+                            <span class="msg-time c-grey">{{ getMsgTime(message) }}</span>
+                            <div class="dropdown" 
+                                 v-show="dropdownOpen == true && msgIndex == index">
+                                <div class="dropdown-content">
+                                    <span>Info messaggio</span>
+                                    <span @click="deleteMsg(msgIndex)">Cancella messaggio</span>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     <!-- /current chat -->

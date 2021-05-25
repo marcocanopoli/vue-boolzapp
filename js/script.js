@@ -96,10 +96,29 @@ var app = new Vue({
                     }
                 ],
             },
+            {
+                name: 'Lùìgì',
+                avatar: '_5',
+                visible: true,
+                messages: [
+                    {
+                        date: '10/01/2020 15:30:55',
+                        text: 'Lo sai che ha aperto una nuova pizzeria?',
+                        status: 'sent'
+                    },
+                    {
+                        date: '10/01/2020 15:50:00',
+                        text: 'Si, ma preferirei andare al cinema',
+                        status: 'received'
+                    }
+                ],
+            }
         ],
         activeChatIndex: 0,
         search: '',
-        newMsg: ''
+        newMsg: '',
+        msgIndex: 0,
+        dropdownOpen: false
     },
     methods: {
         //get date and time
@@ -109,7 +128,7 @@ var app = new Vue({
 
         //get message time in HH:mm format
         getMsgTime: function(message) {
-            const msgTime = message.date.split(" ")[1];
+            const msgTime = message.date.split(' ')[1];
             return msgTime.substr(0, 5);
         },
 
@@ -120,36 +139,55 @@ var app = new Vue({
 
         //get last message for specified contact obj
         getLastMsg: function(contact) {
-            return contact.messages[contact.messages.length - 1];
+            let lastMsg;
+            if (contact.messages.length == 1) {
+                lastMsg = contact.messages[0];
+            } else if (contact.messages.length > 1) {
+                lastMsg = contact.messages[contact.messages.length - 1];
+            } else {
+                lastMsg = '';
+            }
+            return lastMsg;
         },
 
         //get last message text for specified contact obj
         getLastMsgText: function(contact) {
-            return this.getLastMsg(contact).text;
+            let lastMsgText;
+            if (this.getLastMsg(contact) == '') {
+                lastMsgText = '';
+            } else {
+                lastMsgText = this.getLastMsg(contact).text;
+            }
+            return lastMsgText;
         },
 
         //get last message date for specified contact obj
         //special checks for 'yesterday' and 'today' days
         getLastMsgDate: function(contact) {
-            const todayDateTime = this.getNowDateTime();
-            const todayDate = todayDateTime.split(" ")[0];
-            const todayDay = todayDateTime.substr(0, 2);          
-            const todayMonthYear = todayDateTime.substr(2, 8);         
-            const msgDateTime =  this.getLastMsg(contact).date;
-            const msgDate = msgDateTime.split(" ")[0];
-            const msgDay = msgDateTime.substr(0, 2);
-            const msgMonthYear = msgDateTime.substr(2, 8);
-            const msgHoursMins = msgDateTime.substr(10, 6);
-            let lastMsgTime;
-
-            if (msgDate == todayDate) {
-                lastMsgTime = `oggi ${msgHoursMins}`
-            } else if (msgMonthYear == todayMonthYear && msgDay == todayDay - 1) {
-                lastMsgTime = `ieri ${msgHoursMins}`
+            let lastMsgTime = '';
+            if (this.getLastMsg(contact) == '') {
+                return lastMsgTime;
             } else {
-                lastMsgTime = `${msgDate} ${msgHoursMins}`
+                const todayDateTime = this.getNowDateTime();
+                const todayDate = todayDateTime.split(" ")[0];
+                const todayDay = todayDateTime.substr(0, 2);          
+                const todayMonthYear = todayDateTime.substr(2, 8);         
+                const msgDateTime =  this.getLastMsg(contact).date;
+                const msgDate = msgDateTime.split(" ")[0];
+                const msgDay = msgDateTime.substr(0, 2);
+                const msgMonthYear = msgDateTime.substr(2, 8);
+                const msgHoursMins = msgDateTime.substr(10, 6);
+                
+                if (msgDate == todayDate) {
+                    lastMsgTime = `oggi ${msgHoursMins}`
+                } else if (msgMonthYear == todayMonthYear && msgDay == todayDay - 1) {
+                    lastMsgTime = `ieri ${msgHoursMins}`
+                } else {
+                    lastMsgTime = `${msgDate} ${msgHoursMins}`
+                }
+                return lastMsgTime;
             }
-            return lastMsgTime;
+            
         },
         
         //gets current active contact
@@ -169,21 +207,23 @@ var app = new Vue({
 
         //sends message in current chat
         sendMsg: function() {
-            const msg = {
+            this.getActiveContact().messages.push({
                 date: this.getNowDateTime(),
                 text: this.newMsg,
                 status: 'sent'
-            }
-            this.getActiveContact().messages.push(msg);
+            });
             this.newMsg = '';
+            this.sendBotMsg();
+        },
 
+        //bot answer in current chat
+        sendBotMsg: function() {            
             setTimeout(() => {
-                const botMsg = {
+                this.getActiveContact().messages.push({
                     date: this.getNowDateTime(),
                     text: 'ok',
                     status: 'received'
-                }
-                this.getActiveContact().messages.push(botMsg); 
+                }); 
             }, 1000);
         },
 
@@ -198,7 +238,7 @@ var app = new Vue({
 
         //normalize string (no accents)
         strNormalize: function (string) {
-            return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            return string.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         },
 
         // search function for contact names
@@ -217,8 +257,29 @@ var app = new Vue({
 
         //scroll to last message
         lastMsgScroll: function() {
-            const msgList = document.querySelectorAll('.msg-text');        
-            msgList[msgList.length -1].scrollIntoView();
+            const msgList = document.querySelectorAll('.msg-text');
+            if (msgList.length != 0){
+                msgList[msgList.length -1].scrollIntoView();
+            }        
+        },
+
+        //message dropdown toggle open
+        dropdownToggle: function(index) {
+            this.msgIndex = index;
+            this.dropdownOpen = !this.dropdownOpen;
+        },
+
+        closeToggle: function() {
+            this.dropdownOpen = false;
+            console.log("close");
+        },
+
+        //delete selected message
+        deleteMsg: function(msgIndex) {
+            if (this.getActiveContact().messages.length != 0) {
+                this.getActiveContact().messages.splice(msgIndex, 1);
+            }
+            this.closeToggle();
         }
     },
     updated () {
